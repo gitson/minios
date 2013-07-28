@@ -1,4 +1,4 @@
-org 7C00h
+org 7e00h
 
 section .text
 
@@ -15,8 +15,6 @@ select:
 	mov al, bl
 	cmp al, 49
 	jz showmode13
-	cmp al, 50
-	jz kernelload
 	jmp again
 
 done:
@@ -85,33 +83,10 @@ loopstart:
 	int 10h
 	jmp again
 
-kernelload:
-	push 0
-	push 0
-	push kernellen
-	push kernel
-	call writestring
-	call readchar
-
-	mov ah, 2
-	mov al, 1
-	mov ch, 0
-	mov cl, 2
-	mov dh, 0
-	mov dl, 80h
-	xor bx, bx
-	mov es, bx
-	mov bx, 7e00h
-	int 13h
-
-	jmp 0x0000:0x7e00
-
 section .data
 
-menu db '[0]: Hello [1]: Mode 13h [2]: Kernel'
+menu db '[0]: Bubu [1]: Foo'
 menulen equ $-menu
 hello db 'Hello, world'
 hellolen equ $-hello
-kernel db 'I am kernel.'
-kernellen equ $-kernel
 
